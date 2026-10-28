@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: retorta
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/salud
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: "8000"
