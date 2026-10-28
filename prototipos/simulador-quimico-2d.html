@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador Químico - Prototipo Ibuprofeno</title>
+<style>
+  :root {
+    --bg: #0f172a; --panel: #1e293b; --panel2: #273449; --text: #e2e8f0;
+    --muted: #94a3b8; --accent: #38bdf8; --ok: #4ade80; --warn: #fbbf24; --bad: #f87171;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, Segoe UI, Roboto, sans-serif; background: var(--bg); color: var(--text); }
+  header { padding: 16px 24px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  header h1 { margin: 0; font-size: 20px; }
+  header span { color: var(--muted); font-size: 13px; }
+  main { display: grid; grid-template-columns: 260px 1fr 340px; gap: 16px; padding: 16px; min-height: calc(100vh - 140px); }
+  @media (max-width: 1000px) { main { grid-template-columns: 1fr; } }
+  .panel { background: var(--panel); border-radius: 12px; padding: 16px; }
+  .panel h2 { margin: 0 0 12px; font-size: 15px; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; }
+  .compuesto { background: var(--panel2); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; cursor: grab; border-left: 4px solid var(--accent); user-select: none; }
+  .compuesto:active { cursor: grabbing; }
+  .compuesto small { color: var(--muted); display: block; margin-top: 2px; }
+  #reactor { border: 2px dashed #475569; border-radius: 12px; min-height: 120px; padding: 12px; transition: .2s; }
+  #reactor.over { border-color: var(--accent); background: rgba(56,189,248,.07); }
+  #reactor .vacio { color: var(--muted); text-align: center; padding: 30px 0; }
+  .item { background: var(--panel2); border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+  .item-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .item-head button { background: none; border: none; color: var(--bad); cursor: pointer; font-size: 18px; }
+  .ctrl { display: grid; grid-template-columns: 70px 1fr 70px; gap: 8px; align-items: center; font-size: 13px; margin: 4px 0; }
+  .ctrl input[type=range] { width: 100%; accent-color: var(--accent); }
+  .ctrl output { text-align: right; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .gauge-wrap { text-align: center; margin-bottom: 10px; }
+  .gauge { width: 190px; height: 190px; margin: 0 auto; }
+  .gauge text { fill: var(--text); }
+  .barra { margin: 10px 0; }
+  .barra-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+  .barra-bg { background: #0b1220; border-radius: 6px; height: 12px; overflow: hidden; }
+  .barra-fill { height: 100%; border-radius: 6px; transition: width .4s, background .4s; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+  td { padding: 5px 0; border-bottom: 1px solid #334155; }
+  td:last-child { text-align: right; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .alerta { background: rgba(248,113,113,.12); border-left: 4px solid var(--bad); padding: 8px 10px; border-radius: 6px; font-size: 13px; margin: 6px 0; }
+  .alerta.ok { background: rgba(74,222,128,.12); border-color: var(--ok); }
+  .alerta.warn { background: rgba(251,191,36,.12); border-color: var(--warn); }
+  footer { padding: 12px 24px; color: var(--muted); font-size: 12px; border-top: 1px solid #334155; }
+  button.reset { background: var(--panel2); color: var(--text); border: 1px solid #475569; border-radius: 8px; padding: 8px 12px; cursor: pointer; margin-top: 8px; width: 100%; }
+  button.reset:hover { border-color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>⚗️ Simulador Químico <small style="color:var(--muted);font-weight:400">· Prototipo ibuprofeno</small></h1>
+  <span>Herramienta de estimación. No reemplaza ensayos de laboratorio.</span>
+</header>
+
+<main>
+  <section class="panel">
+    <h2>Compuestos</h2>
+    <div id="catalogo"></div>
+    <p style="color:var(--muted);font-size:12px">Arrastrá los componentes al reactor (o hacé clic para agregarlos).</p>
+  </section>
+
+  <section class="panel">
+    <h2>Reactor</h2>
+    <div id="reactor"><div class="vacio">Soltá acá los compuestos</div></div>
+    <button class="reset" id="btnEjemplo">Cargar ejemplo de mezcla</button>
+    <button class="reset" id="btnLimpiar">Vaciar reactor</button>
+  </section>
+
+  <section class="panel">
+    <h2>Resultados</h2>
+    <div class="gauge-wrap">
+      <svg class="gauge" viewBox="0 0 200 200" id="gauge"></svg>
+      <div style="color:var(--muted);font-size:12px">Puntaje de calidad estimado</div>
+    </div>
+    <div id="barras"></div>
+    <table id="props"></table>
+    <div id="alertas" style="margin-top:12px"></div>
+  </section>
+</main>
+
+<footer>
+  Prototipo educativo con datos simplificados. El puntaje mide calidad de la mezcla (pureza, rendimiento, balance estequiométrico), no eficacia clínica.
+  Todos los valores deben validarse con fuentes oficiales (USP, Ph. Eur.) y un profesional del área.
+</footer>
+
+<script>
+// ---------- Datos (simplificados, a validar con una persona del área) ----------
+const COMPUESTOS = [
+  { id: 'ibb',  nombre: 'Isobutilbenceno',      rol: 'Materia prima', pm: 134.22, coef: 1, tipo: 'reactivo' },
+  { id: 'aa',   nombre: 'Anhídrido acético',    rol: 'Agente acetilante', pm: 102.09, coef: 1, tipo: 'reactivo' },
+  { id: 'cat',  nombre: 'Catalizador (AlCl₃)',  rol: 'Catalizador', pm: 133.34, coef: 0, tipo: 'catalizador', optimo: 0.15 },
+  { id: 'h2',   nombre: 'Hidrógeno / reductor', rol: 'Reductor', pm: 2.02, coef: 1, tipo: 'reactivo' },
+  { id: 'co',   nombre: 'Monóxido de carbono',  rol: 'Carbonilación', pm: 28.01, coef: 1, tipo: 'reactivo' },
+  { id: 'exc',  nombre: 'Excipiente (celulosa)', rol: 'Formulación', pm: 0, coef: 0, tipo: 'excipiente' },
+];
+const PM_IBUPROFENO = 206.28;
+const ESPEC_PUREZA_MIN = 98.5;  // % valor orientativo, a validar con farmacopea
+
+// ---------- Estado ----------
+let reactor = []; // { uid, id, gramos, pureza }
+let uid = 0;
+
+// ---------- Catálogo ----------
+const catalogoEl = document.getElementById('catalogo');
+COMPUESTOS.forEach(c => {
+  const d = document.createElement('div');
+  d.className = 'compuesto'; d.draggable = true; d.dataset.id = c.id;
+  d.innerHTML = `<strong>${c.nombre}</strong><small>${c.rol}${c.pm ? ' · PM ' + c.pm : ''}</small>`;
+  d.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', c.id));
+  d.addEventListener('click', () => agregar(c.id));
+  catalogoEl.appendChild(d);
+});
+
+// ---------- Reactor ----------
+const reactorEl = document.getElementById('reactor');
+reactorEl.addEventListener('dragover', e => { e.preventDefault(); reactorEl.classList.add('over'); });
+reactorEl.addEventListener('dragleave', () => reactorEl.classList.remove('over'));
+reactorEl.addEventListener('drop', e => {
+  e.preventDefault(); reactorEl.classList.remove('over');
+  agregar(e.dataTransfer.getData('text/plain'));
+});
+
+function agregar(id) {
+  if (!id || reactor.some(r => r.id === id)) return;
+  reactor.push({ uid: ++uid, id, gramos: 100, pureza: 98 });
+  render();
+}
+function quitar(u) { reactor = reactor.filter(r => r.uid !== u); render(); }
+
+document.getElementById('btnLimpiar').onclick = () => { reactor = []; render(); };
+document.getElementById('btnEjemplo').onclick = () => {
+  reactor = [
+    { uid: ++uid, id: 'ibb', gramos: 134, pureza: 99 },
+    { uid: ++uid, id: 'aa',  gramos: 102, pureza: 98 },
+    { uid: ++uid, id: 'cat', gramos: 20,  pureza: 97 },
+    { uid: ++uid, id: 'h2',  gramos: 2,   pureza: 99 },
+    { uid: ++uid, id: 'co',  gramos: 28,  pureza: 98 },
+    { uid: ++uid, id: 'exc', gramos: 30,  pureza: 99 },
+  ];
+  render();
+};
+
+function renderReactor() {
+  if (!reactor.length) { reactorEl.innerHTML = '<div class="vacio">Soltá acá los compuestos</div>'; return; }
+  reactorEl.innerHTML = '';
+  reactor.forEach(r => {
+    const c = COMPUESTOS.find(x => x.id === r.id);
+    const div = document.createElement('div'); div.className = 'item';
+    div.innerHTML = `
+      <div class="item-head"><strong>${c.nombre}</strong><button title="Quitar">✕</button></div>
+      <div class="ctrl"><span>Cantidad</span><input type="range" min="0" max="400" step="1" value="${r.gramos}"><output>${r.gramos} g</output></div>
+      <div class="ctrl"><span>Pureza</span><input type="range" min="80" max="100" step="0.5" value="${r.pureza}"><output>${r.pureza}%</output></div>`;
+    div.querySelector('button').onclick = () => quitar(r.uid);
+    const [s1, s2] = div.querySelectorAll('input');
+    const [o1, o2] = div.querySelectorAll('output');
+    s1.oninput = () => { r.gramos = +s1.value; o1.textContent = r.gramos + ' g'; calcular(); };
+    s2.oninput = () => { r.pureza = +s2.value; o2.textContent = r.pureza + '%'; calcular(); };
+    reactorEl.appendChild(div);
+  });
+}
+
+// ---------- Motor de cálculo (simplificado) ----------
+function calcular() {
+  const reactivos = reactor.filter(r => COMPUESTOS.find(c => c.id === r.id).tipo === 'reactivo');
+  const cat = reactor.find(r => r.id === 'cat');
+  const exc = reactor.find(r => r.id === 'exc');
+  const alertas = [];
+
+  if (reactivos.length < 4) {
+    return mostrar(null, alertas.concat([{ t: 'warn', m: 'Agregá los 4 reactivos (isobutilbenceno, anhídrido acético, hidrógeno y CO) para simular la síntesis.' }]));
+  }
+
+  // Moles útiles de cada reactivo, corregidos por pureza
+  const molesUtiles = reactivos.map(r => {
+    const c = COMPUESTOS.find(x => x.id === r.id);
+    return { c, r, mol: (r.gramos * r.pureza / 100) / c.pm };
+  });
+  // Reactivo limitante (relación 1:1:1:1 en este modelo didáctico)
+  const limitante = molesUtiles.reduce((a, b) => (b.mol / b.c.coef < a.mol / a.c.coef ? b : a));
+  const molesTeoricos = limitante.mol / limitante.c.coef;
+  const gTeorico = molesTeoricos * PM_IBUPROFENO;
+
+  // Factor de catalizador: óptimo ~15% en moles respecto al limitante
+  let factorCat = 0.5;
+  if (cat) {
+    const molCat = (cat.gramos * cat.pureza / 100) / 133.34;
+    const ratio = molCat / molesTeoricos;
+    const desvio = Math.abs(ratio - 0.15) / 0.15;
+    factorCat = Math.max(0.4, 1 - desvio * 0.35);
+    if (ratio < 0.08) alertas.push({ t: 'warn', m: 'Poco catalizador: la reacción sería lenta o incompleta.' });
+    if (ratio > 0.30) alertas.push({ t: 'warn', m: 'Exceso de catalizador: más residuos y costo, sin ganancia de rendimiento.' });
+  } else {
+    alertas.push({ t: 'bad', m: 'Sin catalizador el rendimiento cae fuertemente.' });
+  }
+
+  // Exceso de reactivos (desperdicio)
+  const excesos = molesUtiles.map(m => ({ n: m.c.nombre, ex: (m.mol / m.c.coef) / molesTeoricos - 1 }));
+  const maxEx = Math.max(...excesos.map(e => e.ex));
+  if (maxEx > 0.25) {
+    const peor = excesos.find(e => e.ex === maxEx);
+    alertas.push({ t: 'warn', m: `Gran exceso de ${peor.n} (+${(maxEx * 100).toFixed(0)}%): sobrante que hay que separar.` });
+  }
+  const factorExceso = Math.max(0.6, 1 - Math.max(0, maxEx - 0.1) * 0.3);
+
+  // Rendimiento estimado (base 85% de una ruta eficiente) con factores
+  const rendimiento = Math.min(0.95, 0.85 * factorCat * factorExceso);
+  const gReal = gTeorico * rendimiento;
+
+  // Pureza del producto: impurezas de los insumos y penalización por catalizador
+  const impMedia = molesUtiles.reduce((s, m) => s + (100 - m.r.pureza), 0) / molesUtiles.length;
+  let purezaProd = 100 - impMedia * 1.6 - (1 - factorCat) * 4;
+  purezaProd = Math.max(80, Math.min(99.9, purezaProd));
+
+  // Formulación: % de principio activo en la mezcla final
+  const excG = exc ? exc.gramos * exc.pureza / 100 : 0;
+  const pctActivo = gReal / (gReal + excG || 1) * 100;
+  if (!exc) alertas.push({ t: 'warn', m: 'Sin excipiente: solo se evalúa el principio activo, no la formulación final.' });
+
+  // Puntaje de calidad (0-100)
+  const sRend = rendimiento / 0.95 * 100;
+  const sPureza = Math.max(0, (purezaProd - 90) / (100 - 90) * 100);
+  const sBalance = Math.max(0, 100 - maxEx * 150);
+  const puntaje = Math.round(sRend * 0.35 + sPureza * 0.45 + sBalance * 0.20);
+
+  if (purezaProd >= ESPEC_PUREZA_MIN) alertas.push({ t: 'ok', m: `Pureza estimada ${purezaProd.toFixed(1)}%: cumple el mínimo orientativo (${ESPEC_PUREZA_MIN}%).` });
+  else alertas.push({ t: 'bad', m: `Pureza estimada ${purezaProd.toFixed(1)}%: NO cumple el mínimo orientativo (${ESPEC_PUREZA_MIN}%).` });
+
+  mostrar({
+    puntaje, rendimiento: rendimiento * 100, purezaProd, sBalance,
+    limitante: limitante.c.nombre, gTeorico, gReal, pctActivo: exc ? pctActivo : null
+  }, alertas);
+}
+
+// ---------- Visualización ----------
+function color(v) { return v >= 75 ? 'var(--ok)' : v >= 50 ? 'var(--warn)' : 'var(--bad)'; }
+
+function dibujarGauge(valor) {
+  const r = 80, c = 2 * Math.PI * r, p = valor == null ? 0 : valor / 100;
+  document.getElementById('gauge').innerHTML = `
+    <circle cx="100" cy="100" r="${r}" fill="none" stroke="#0b1220" stroke-width="16"/>
+    <circle cx="100" cy="100" r="${r}" fill="none" stroke="${valor == null ? '#334155' : color(valor)}" stroke-width="16"
+      stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - p)}"
+      transform="rotate(-90 100 100)" style="transition: stroke-dashoffset .5s, stroke .5s"/>
+    <text x="100" y="108" text-anchor="middle" font-size="40" font-weight="700">${valor == null ? '--' : valor}</text>
+    <text x="100" y="130" text-anchor="middle" font-size="12" fill="#94a3b8">de 100</text>`;
+}
+
+function barra(label, v, texto) {
+  return `<div class="barra"><div class="barra-label"><span>${label}</span><span>${texto}</span></div>
+  <div class="barra-bg"><div class="barra-fill" style="width:${Math.max(0, Math.min(100, v))}%;background:${color(v)}"></div></div></div>`;
+}
+
+function mostrar(res, alertas) {
+  dibujarGauge(res ? res.puntaje : null);
+  const barrasEl = document.getElementById('barras');
+  const propsEl = document.getElementById('props');
+  if (!res) { barrasEl.innerHTML = ''; propsEl.innerHTML = ''; }
+  else {
+    barrasEl.innerHTML =
+      barra('Rendimiento estimado', res.rendimiento, res.rendimiento.toFixed(1) + '%') +
+      barra('Pureza del producto', (res.purezaProd - 80) / 20 * 100, res.purezaProd.toFixed(1) + '%') +
+      barra('Balance estequiométrico', res.sBalance, res.sBalance.toFixed(0) + '/100');
+    propsEl.innerHTML = `
+      <tr><td>Reactivo limitante</td><td>${res.limitante}</td></tr>
+      <tr><td>Ibuprofeno teórico</td><td>${res.gTeorico.toFixed(1)} g</td></tr>
+      <tr><td>Ibuprofeno estimado</td><td>${res.gReal.toFixed(1)} g</td></tr>
+      <tr><td>Peso molecular</td><td>${PM_IBUPROFENO} g/mol</td></tr>
+      ${res.pctActivo != null ? `<tr><td>% principio activo en mezcla</td><td>${res.pctActivo.toFixed(1)}%</td></tr>` : ''}`;
+  }
+  document.getElementById('alertas').innerHTML = alertas.map(a => `<div class="alerta ${a.t}">${a.m}</div>`).join('');
+}
+
+function render() { renderReactor(); calcular(); }
+render();
+</script>
+</body>
+</html>

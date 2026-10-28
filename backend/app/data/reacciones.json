@@ -1,0 +1,231 @@
+[
+  {
+    "id": "ibuprofeno-simplificada",
+    "nombre": "Ibuprofeno (ruta didáctica simplificada)",
+    "descripcion": "Ecuación global: isobutilbenceno + anhídrido acético + H2 + CO → ibuprofeno + ácido acético. Resume una secuencia de acetilación, hidrogenación y carbonilación; el AlCl3 del prototipo se trata como catalizador que no se consume.",
+    "categoria": "Síntesis farmacéutica",
+    "reactivos": [
+      { "id": "ibb", "coef": 1 },
+      { "id": "aa", "coef": 1 },
+      { "id": "h2", "coef": 1 },
+      { "id": "co", "coef": 1 }
+    ],
+    "productos": [
+      { "id": "ibuprofeno", "coef": 1, "principal": true },
+      { "id": "acido-acetico", "coef": 1 }
+    ],
+    "catalizador": "cat",
+    "excipiente": "exc",
+    "parametros": {
+      "catalizador_requerido": true,
+      "catalizador_ratio_optimo": 0.15,
+      "catalizador_ratio_minimo": 0.08,
+      "catalizador_ratio_maximo": 0.30,
+      "pendiente_catalizador": 0.35,
+      "factor_catalizador_minimo": 0.4,
+      "factor_catalizador_ausente": 0.5,
+      "rendimiento_base": 0.85,
+      "rendimiento_maximo": 0.95,
+      "exceso_tolerado": 0.1,
+      "exceso_alerta": 0.25,
+      "pendiente_exceso": 0.3,
+      "factor_exceso_minimo": 0.6,
+      "penalizacion_impureza": 1.6,
+      "penalizacion_catalizador_pureza": 4.0,
+      "pureza_producto_minima": 80,
+      "pureza_producto_maxima": 99.9,
+      "pureza_especificada_minima": 98.5,
+      "pesos_puntaje": { "rendimiento": 0.35, "pureza": 0.45, "balance": 0.20 }
+    },
+    "fuente": "Prototipo didáctico del proyecto",
+    "estado_validacion": "Prototipo sin validar: todos los parámetros son supuestos didácticos a revisar con una persona del área."
+  },
+  {
+    "id": "aspirina-acetilacion",
+    "nombre": "Ácido acetilsalicílico (acetilación del ácido salicílico)",
+    "descripcion": "Síntesis clásica de laboratorio: ácido salicílico + anhídrido acético → ácido acetilsalicílico + ácido acético, con un ácido fuerte como catalizador.",
+    "categoria": "Síntesis farmacéutica",
+    "reactivos": [
+      { "id": "acido-salicilico", "coef": 1 },
+      { "id": "aa", "coef": 1 }
+    ],
+    "productos": [
+      { "id": "aspirina", "coef": 1, "principal": true },
+      { "id": "acido-acetico", "coef": 1 }
+    ],
+    "catalizador": "h2so4",
+    "excipiente": null,
+    "parametros": {},
+    "fuente": "Estequiometría: balance de átomos (verificado por el programa). Parámetros de rendimiento y pureza: genéricos.",
+    "estado_validacion": "Estequiometría verificada; los parámetros de rendimiento y pureza son genéricos y NO están validados."
+  },
+  {
+    "id": "paracetamol-acetilacion",
+    "nombre": "Paracetamol (acetilación del 4-aminofenol)",
+    "descripcion": "4-aminofenol + anhídrido acético → paracetamol + ácido acético.",
+    "categoria": "Síntesis farmacéutica",
+    "reactivos": [
+      { "id": "4-aminofenol", "coef": 1 },
+      { "id": "aa", "coef": 1 }
+    ],
+    "productos": [
+      { "id": "paracetamol", "coef": 1, "principal": true },
+      { "id": "acido-acetico", "coef": 1 }
+    ],
+    "catalizador": null,
+    "excipiente": null,
+    "parametros": {},
+    "fuente": "Estequiometría: balance de átomos (verificado por el programa). Parámetros de rendimiento y pureza: genéricos.",
+    "estado_validacion": "Estequiometría verificada; los parámetros de rendimiento y pureza son genéricos y NO están validados."
+  },
+  {
+    "id": "neutralizacion-hcl-naoh",
+    "nombre": "Neutralización de ácido clorhídrico con hidróxido de sodio",
+    "descripcion": "HCl + NaOH → NaCl + H2O",
+    "categoria": "Inorgánica",
+    "reactivos": [
+      { "id": "hcl", "coef": 1 },
+      { "id": "naoh", "coef": 1 }
+    ],
+    "productos": [
+      { "id": "nacl", "coef": 1, "principal": true },
+      { "id": "agua", "coef": 1 }
+    ],
+    "catalizador": null,
+    "excipiente": null,
+    "parametros": {},
+    "fuente": "Estequiometría: balance de átomos (verificado por el programa).",
+    "estado_validacion": "Estequiometría verificada; los parámetros de rendimiento y pureza son genéricos y NO están validados."
+  },
+  {
+    "id": "neutralizacion-h2so4-naoh",
+    "nombre": "Neutralización de ácido sulfúrico con hidróxido de sodio",
+    "descripcion": "H2SO4 + 2 NaOH → Na2SO4 + 2 H2O",
+    "categoria": "Inorgánica",
+    "reactivos": [
+      { "id": "h2so4", "coef": 1 },
+      { "id": "naoh", "coef": 2 }
+    ],
+    "productos": [
+      { "id": "na2so4", "coef": 1, "principal": true },
+      { "id": "agua", "coef": 2 }
+    ],
+    "catalizador": null,
+    "excipiente": null,
+    "parametros": {},
+    "fuente": "Estequiometría: balance de átomos (verificado por el programa).",
+    "estado_validacion": "Estequiometría verificada; los parámetros de rendimiento y pureza son genéricos y NO están validados."
+  },
+  {
+    "id": "combustion-metano",
+    "nombre": "Combustión completa del metano",
+    "descripcion": "CH4 + 2 O2 → CO2 + 2 H2O",
+    "categoria": "Inorgánica",
+    "reactivos": [
+      { "id": "metano", "coef": 1 },
+      { "id": "o2", "coef": 2 }
+    ],
+    "productos": [
+      { "id": "co2", "coef": 1, "principal": true },
+      { "id": "agua", "coef": 2 }
+    ],
+    "catalizador": null,
+    "excipiente": null,
+    "parametros": {},
+    "fuente": "Estequiometría: balance de átomos (verificado por el programa).",
+    "estado_validacion": "Estequiometría verificada; los parámetros de rendimiento y pureza son genéricos y NO están validados."
+  },
+  {
+    "id": "haber-bosch",
+    "nombre": "Síntesis de amoníaco (Haber-Bosch)",
+    "descripcion": "N2 + 3 H2 → 2 NH3, con catalizador de hierro.",
+    "categoria": "Inorgánica",
+    "reactivos": [
+      { "id": "n2", "coef": 1 },
+      { "id": "h2", "coef": 3 }
+    ],
+    "productos": [
+      { "id": "nh3", "coef": 2, "principal": true }
+    ],
+    "catalizador": "hierro",
+    "excipiente": null,
+    "parametros": {},
+    "fuente": "Estequiometría: balance de átomos (verificado por el programa).",
+    "estado_validacion": "Estequiometría verificada; el rendimiento real depende de presión, temperatura y reciclado, que este modelo NO representa."
+  },
+  {
+    "id": "esterificacion-acetato-etilo",
+    "nombre": "Acetato de etilo (esterificación de Fischer)",
+    "descripcion": "Ácido acético + etanol ⇌ acetato de etilo + agua, con un ácido fuerte como catalizador.",
+    "categoria": "Orgánica",
+    "reactivos": [
+      { "id": "acido-acetico", "coef": 1 },
+      { "id": "etanol", "coef": 1 }
+    ],
+    "productos": [
+      { "id": "acetato-etilo", "coef": 1, "principal": true },
+      { "id": "agua", "coef": 1 }
+    ],
+    "catalizador": "h2so4",
+    "excipiente": null,
+    "parametros": {},
+    "fuente": "Estequiometría: balance de átomos (verificado por el programa).",
+    "estado_validacion": "Estequiometría verificada; la reacción es un equilibrio y el modelo NO calcula la conversión de equilibrio."
+  },
+  {
+    "id": "sulfato-cobre-pentahidratado",
+    "nombre": "Sulfato de cobre(II) pentahidratado desde el óxido",
+    "descripcion": "CuO + H2SO4 + 4 H2O → CuSO4·5H2O",
+    "categoria": "Inorgánica",
+    "reactivos": [
+      { "id": "cuo", "coef": 1 },
+      { "id": "h2so4", "coef": 1 },
+      { "id": "agua", "coef": 4 }
+    ],
+    "productos": [
+      { "id": "cuso4-5h2o", "coef": 1, "principal": true }
+    ],
+    "catalizador": null,
+    "excipiente": null,
+    "parametros": {},
+    "fuente": "Estequiometría: balance de átomos (verificado por el programa).",
+    "estado_validacion": "Estequiometría verificada; los parámetros de rendimiento y pureza son genéricos y NO están validados."
+  },
+  {
+    "id": "zinc-acido-clorhidrico",
+    "nombre": "Zinc con ácido clorhídrico",
+    "descripcion": "Zn + 2 HCl → ZnCl2 + H2",
+    "categoria": "Inorgánica",
+    "reactivos": [
+      { "id": "zinc", "coef": 1 },
+      { "id": "hcl", "coef": 2 }
+    ],
+    "productos": [
+      { "id": "zncl2", "coef": 1, "principal": true },
+      { "id": "h2", "coef": 1 }
+    ],
+    "catalizador": null,
+    "excipiente": null,
+    "parametros": {},
+    "fuente": "Estequiometría: balance de átomos (verificado por el programa).",
+    "estado_validacion": "Estequiometría verificada; produce hidrógeno inflamable. Los parámetros de rendimiento y pureza son genéricos y NO están validados."
+  },
+  {
+    "id": "calcinacion-carbonato-calcio",
+    "nombre": "Calcinación del carbonato de calcio",
+    "descripcion": "CaCO3 → CaO + CO2",
+    "categoria": "Inorgánica",
+    "reactivos": [
+      { "id": "caco3", "coef": 1 }
+    ],
+    "productos": [
+      { "id": "cao", "coef": 1, "principal": true },
+      { "id": "co2", "coef": 1 }
+    ],
+    "catalizador": null,
+    "excipiente": null,
+    "parametros": {},
+    "fuente": "Estequiometría: balance de átomos (verificado por el programa).",
+    "estado_validacion": "Estequiometría verificada; los parámetros de rendimiento y pureza son genéricos y NO están validados."
+  }
+]

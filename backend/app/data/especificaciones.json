@@ -1,0 +1,80 @@
+[
+  {
+    "id": "ibuprofeno-pureza",
+    "producto": "ibuprofeno",
+    "parametro": "Pureza del producto",
+    "minimo": 98.5,
+    "maximo": null,
+    "unidad": "%",
+    "fuente": "Valor orientativo del prototipo",
+    "estado": "pendiente de validar con farmacopea (USP / Ph. Eur. / Farmacopea Argentina)",
+    "modelado": true,
+    "tipo": "ensayo",
+    "farmacopea": ""
+  },
+  {
+    "id": "ibuprofeno-sustancias-relacionadas",
+    "producto": "ibuprofeno",
+    "parametro": "Sustancias relacionadas (impurezas totales)",
+    "minimo": null,
+    "maximo": null,
+    "unidad": "%",
+    "fuente": "",
+    "estado": "sin límite cargado: tomarlo de la monografía vigente (USP / Ph. Eur. / Farmacopea Argentina)",
+    "modelado": false,
+    "tipo": "impurezas",
+    "farmacopea": ""
+  },
+  {
+    "id": "ibuprofeno-perdida-secado",
+    "producto": "ibuprofeno",
+    "parametro": "Pérdida por secado",
+    "minimo": null,
+    "maximo": null,
+    "unidad": "%",
+    "fuente": "",
+    "estado": "sin límite cargado: tomarlo de la monografía vigente (USP / Ph. Eur. / Farmacopea Argentina)",
+    "modelado": false,
+    "tipo": "fisicoquimico",
+    "farmacopea": ""
+  },
+  {
+    "id": "ibuprofeno-residuo-ignicion",
+    "producto": "ibuprofeno",
+    "parametro": "Residuo de ignición (cenizas sulfatadas)",
+    "minimo": null,
+    "maximo": null,
+    "unidad": "%",
+    "fuente": "",
+    "estado": "sin límite cargado: tomarlo de la monografía vigente (USP / Ph. Eur. / Farmacopea Argentina)",
+    "modelado": false,
+    "tipo": "fisicoquimico",
+    "farmacopea": ""
+  },
+  {
+    "id": "ibuprofeno-metales-pesados",
+    "producto": "ibuprofeno",
+    "parametro": "Metales pesados",
+    "minimo": null,
+    "maximo": null,
+    "unidad": "ppm",
+    "fuente": "",
+    "estado": "sin límite cargado: tomarlo de la monografía vigente (USP / Ph. Eur. / Farmacopea Argentina)",
+    "modelado": false,
+    "tipo": "impurezas",
+    "farmacopea": ""
+  },
+  {
+    "id": "ibuprofeno-solventes-residuales",
+    "producto": "ibuprofeno",
+    "parametro": "Solventes residuales (el más cercano a su límite)",
+    "minimo": null,
+    "maximo": null,
+    "unidad": "ppm",
+    "fuente": "",
+    "estado": "sin límite cargado: ICH Q3C fija un límite por solvente; agregar una especificación por cada solvente usado en el proceso",
+    "modelado": false,
+    "tipo": "residuos",
+    "farmacopea": ""
+  }
+]

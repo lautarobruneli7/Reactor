@@ -1,0 +1,147 @@
+{
+ "descripcion": "Densidad de líquidos puros a 20 °C. Soluciones: informar la densidad de la solución.",
+ "tolerancia_relativa": 0.015,
+ "densidades": {
+  "1-butanol": {
+   "densidad_g_ml": 0.808,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.8082 g/mL; VDI PPDS: 0.8098 g/mL (diferencia máxima 0.20 %)"
+  },
+  "aa": {
+   "densidad_g_ml": 1.081,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 1.0811 g/mL; VDI PPDS: 1.0817 g/mL (diferencia máxima 0.05 %)"
+  },
+  "acetato-etilo": {
+   "densidad_g_ml": 0.9,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.8995 g/mL; VDI PPDS: 0.9000 g/mL (diferencia máxima 0.06 %)"
+  },
+  "acetona": {
+   "densidad_g_ml": 0.792,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.7923 g/mL; VDI PPDS: 0.7912 g/mL (diferencia máxima 0.14 %)"
+  },
+  "acetonitrilo": {
+   "densidad_g_ml": 0.782,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.7819 g/mL; VDI PPDS: 0.7815 g/mL (diferencia máxima 0.06 %)"
+  },
+  "acido-acetico": {
+   "densidad_g_ml": 1.047,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 1.0470 g/mL; VDI PPDS: 1.0478 g/mL (diferencia máxima 0.07 %)"
+  },
+  "acido-formico": {
+   "densidad_g_ml": 1.22,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 1.2196 g/mL; VDI PPDS: 1.2199 g/mL (diferencia máxima 0.03 %)"
+  },
+  "agua": {
+   "densidad_g_ml": 0.999,
+   "temperatura_c": 20.0,
+   "fuente": "VDI PPDS (vía librería chemicals)",
+   "verificacion_cruzada": "VDI PPDS: 0.9992 g/mL; CRC (líquidos inorgánicos): 0.9973 g/mL (diferencia máxima 0.20 %)"
+  },
+  "bromo": {
+   "densidad_g_ml": 3.122,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 3.1215 g/mL; CRC (líquidos inorgánicos): 3.1028 g/mL (diferencia máxima 0.60 %)"
+  },
+  "ciclohexano": {
+   "densidad_g_ml": 0.778,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.7776 g/mL; VDI PPDS: 0.7788 g/mL (diferencia máxima 0.15 %)"
+  },
+  "cloroformo": {
+   "densidad_g_ml": 1.492,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 1.4920 g/mL; VDI PPDS: 1.4926 g/mL (diferencia máxima 0.04 %)"
+  },
+  "diclorometano": {
+   "densidad_g_ml": 1.328,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 1.3277 g/mL; VDI PPDS: 1.3267 g/mL (diferencia máxima 0.07 %)"
+  },
+  "etanol": {
+   "densidad_g_ml": 0.79,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.7903 g/mL; VDI PPDS: 0.7902 g/mL (diferencia máxima 0.02 %)"
+  },
+  "eter-etilico": {
+   "densidad_g_ml": 0.714,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.7138 g/mL; VDI PPDS: 0.7142 g/mL (diferencia máxima 0.06 %)"
+  },
+  "hexano": {
+   "densidad_g_ml": 0.661,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.6605 g/mL; VDI PPDS: 0.6596 g/mL (diferencia máxima 0.15 %)"
+  },
+  "isopropanol": {
+   "densidad_g_ml": 0.787,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.7868 g/mL; VDI PPDS: 0.7864 g/mL (diferencia máxima 0.05 %)"
+  },
+  "mek": {
+   "densidad_g_ml": 0.805,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.8050 g/mL; VDI PPDS: 0.8052 g/mL (diferencia máxima 0.03 %)"
+  },
+  "metanol": {
+   "densidad_g_ml": 0.794,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.7943 g/mL; VDI PPDS: 0.7920 g/mL (diferencia máxima 0.29 %)"
+  },
+  "p-xileno": {
+   "densidad_g_ml": 0.861,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.8609 g/mL; VDI PPDS: 0.8607 g/mL (diferencia máxima 0.02 %)"
+  },
+  "tolueno": {
+   "densidad_g_ml": 0.868,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.8685 g/mL; VDI PPDS: 0.8673 g/mL (diferencia máxima 0.14 %)"
+  },
+  "trietilamina": {
+   "densidad_g_ml": 0.729,
+   "temperatura_c": 20.0,
+   "fuente": "Perry 2-105 (vía librería chemicals)",
+   "verificacion_cruzada": "Perry 2-105: 0.7290 g/mL; VDI PPDS: 0.7289 g/mL (diferencia máxima 0.01 %)"
+  }
+ },
+ "sin_datos": {
+  "ibb": "menos de dos fuentes (ninguna)",
+  "anilina": "menos de dos fuentes (VDI PPDS)",
+  "benzaldehido": "menos de dos fuentes (VDI PPDS)",
+  "piridina": "menos de dos fuentes (VDI PPDS)",
+  "mibk": "menos de dos fuentes (Perry 2-105)",
+  "thf": "menos de dos fuentes (Perry 2-105)",
+  "dmso": "menos de dos fuentes (Perry 2-105)",
+  "dmf": "menos de dos fuentes (Perry 2-105)",
+  "glicerol": "menos de dos fuentes (VDI PPDS)",
+  "propilenglicol": "menos de dos fuentes (Perry 2-105)",
+  "h2so4": "menos de dos fuentes (CRC (líquidos inorgánicos))",
+  "acido-lactico": "menos de dos fuentes (ninguna)",
+  "h2o2": "menos de dos fuentes (CRC (líquidos inorgánicos))"
+ }
+}

@@ -1,0 +1,37 @@
+# docker compose up --build   ->  http://localhost:8000
+# Antes de usarlo con personas reales: definir SIM_SECRET y la clave del administrador en un archivo .env
+# (no se sube al repositorio). Ejemplo de .env:
+#   SIM_SECRET=<python -c "import secrets; print(secrets.token_urlsafe(48))">
+#   SIM_ADMIN_EMAIL=admin@tu-laboratorio.com
+#   SIM_ADMIN_CLAVE=<clave de 10+ caracteres con mayúsculas, minúsculas y número>
+#   POSTGRES_PASSWORD=<otra clave>
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: retorta
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?definir POSTGRES_PASSWORD en .env}
+      POSTGRES_DB: retorta
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U retorta"]
+      interval: 5s
+      retries: 10
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SIM_AUTH: "on"
+      SIM_SECRET: ${SIM_SECRET:?definir SIM_SECRET en .env}
+      SIM_ADMIN_EMAIL: ${SIM_ADMIN_EMAIL:-}
+      SIM_ADMIN_CLAVE: ${SIM_ADMIN_CLAVE:-}
+      SIM_DATABASE_URL: postgresql+psycopg://retorta:${POSTGRES_PASSWORD}@db:5432/retorta
+    ports:
+      - "8000:8000"
+volumes:
+  pgdata:
